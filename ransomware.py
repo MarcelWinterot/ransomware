@@ -60,6 +60,43 @@ def encryptDecryptFolder(folderPath, option, startTime = time(), count = 0):
             print("Number of encrypted files:", count, "/", len(files))
     print("It took:", time() - startTime, "seconds")
 
-file = "sciezka do pliku"
-dirPath = "sciezka do folderu"
-encryptDecryptFile(file, "decrypt")
+def advancedFolderEncryption(folderPath, count = 0):
+    cipher = fr(key)
+    files = os.listdir(folderPath)
+    numberOfTextFiles = 0
+    for file in files:
+        #Check if a file is a folder
+        if os.path.isdir(folderPath + "/" + file):
+            advancedFolderEncryption(folderPath + "/" + file)
+        else:
+            file = folderPath + "/" + file
+            count += 1
+            numberOfTextFiles += 1
+            with open(file, "rb") as fileToEncrypt:
+                fileData = fileToEncrypt.read()
+                encryptData = cipher.encrypt(fileData)
+            with open(file, "wb") as fileToEncrypt:
+                fileToEncrypt.write(encryptData)
+            print("Number of encrypted files in folder:", folderPath, ":", str(count) + "/" + str(numberOfTextFiles))
+
+def advancedFolderDecryption(folderPath, count = 0):
+    cipher = fr(key)
+    files = os.listdir(folderPath)
+    numberOfTextFiles = 0
+    for file in files:
+        #Check if a file is a folder
+        if os.path.isdir(folderPath + "/" + file):
+            advancedFolderDecryption(folderPath + "/" + file)
+        else:
+            file = folderPath + "/" + file
+            count += 1
+            numberOfTextFiles += 1
+            with open(file, "rb") as fileToEncrypt:
+                fileData = fileToEncrypt.read()
+                encryptData = cipher.decrypt(fileData)
+            with open(file, "wb") as fileToEncrypt:
+                fileToEncrypt.write(encryptData)
+            print("Number of decrypted files in folder:", folderPath, ":", str(count) + "/" + str(numberOfTextFiles))
+
+file = "path to file"
+dirPath = "path to folder"
